@@ -5,12 +5,13 @@ function doPost(e) {
     let sheet = ss.getSheetByName("Гости");
     if (!sheet) {
       sheet = ss.insertSheet("Гости");
-      sheet.appendRow(["Дата и время", "Фамилия", "Имя", "Ответ"]);
+      sheet.appendRow(["Дата и время", "Имя и фамилия", "Имя", "Фамилия", "Ответ"]);
     }
     sheet.appendRow([
       new Date(),
-      data.last || "",
+      data.name || [data.first, data.last].filter(Boolean).join(" "),
       data.first || "",
+      data.last || "",
       data.answer === "yes" ? "приду" : "не приду",
     ]);
     return ContentService.createTextOutput("OK").setMimeType(ContentService.MimeType.TEXT);

@@ -1,22 +1,19 @@
 window.INVITE_CONFIG = {
   honoree: "Людмила",
   eventLabel: "юбилей",
-  // Если возраст ещё не указываем на странице — оставьте пустую строку.
-  age: "",
+  age: "60",
   city: "Якутск",
 
-  // Черновая дата. Как будет точная — замените эти две строки.
-  startsAt: "2026-12-05T17:00:00+09:00",
-  endsAt: "2026-12-05T23:00:00+09:00",
+  startsAt: "2026-09-26T18:00:00+09:00",
+  endsAt: "2026-09-26T23:00:00+09:00",
 
   venue: {
-    name: "Банкетный зал",
-    address: "г. Якутск",
-    floor: "",
-    // Ссылки появятся на странице, когда вставите их сюда.
-    yandex: "",
-    yandexWidget: "",
-    twogis: "",
+    name: "Ресторан «Новый Пекин»",
+    address: "Якутск",
+    floor: "ул. Герцена, 3",
+    yandex: "https://yandex.ru/maps/org/novy_pekin/1865642115/",
+    yandexWidget: "https://yandex.ru/map-widget/v1/?ol=biz&oid=1865642115&z=16&scroll=false",
+    twogis: "https://2gis.ru/yakutsk/firm/70000001017396050",
   },
 
   // Google Apps Script URL (оканчивается на /exec). Ответы гостей пишутся в таблицу.
@@ -33,11 +30,11 @@ window.INVITE_CONFIG = {
 
   photos: {
     envelope: "",
-    hero: "photos/02-hero.jpg",
-    plates: ["photos/03.jpg", "photos/04.jpg"],
-    close: "",
+    hero: "photos/01-envelope.jpg",
+    intro: "photos/02-hero.jpg",
+    rsvp: "photos/03.jpg",
+    close: "photos/04.jpg",
   },
 
-  // Положите файл audio/music.mp3 и укажите путь, если нужна музыка при открытии.
   audio: "audio/music.mp3",
 };

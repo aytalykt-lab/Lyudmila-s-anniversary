@@ -31,14 +31,13 @@ const MONTHS_GEN = [
 const WEEKDAYS = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"];
 
 const cfg = window.INVITE_CONFIG || {};
-const EVENT_AT = new Date(cfg.startsAt || "2026-12-05T17:00:00+09:00");
-const EVENT_END = new Date(cfg.endsAt || "2026-12-05T23:00:00+09:00");
+const EVENT_AT = new Date(cfg.startsAt || "2026-09-26T18:00:00+09:00");
+const EVENT_END = new Date(cfg.endsAt || "2026-09-26T23:00:00+09:00");
 
 const openBtn = document.getElementById("open-invite");
 const envelope = document.getElementById("envelope");
 const letter = document.getElementById("letter");
-const lastInput = document.getElementById("guest-last");
-const firstInput = document.getElementById("guest-first");
+const nameInput = document.getElementById("guest-name");
 const music = document.getElementById("bg-music");
 const musicBtn = document.getElementById("music-toggle");
 const musicHint = document.querySelector("[data-music-hint]");
@@ -55,16 +54,64 @@ function pad(n) {
   return String(n).padStart(2, "0");
 }
 
+function yakutskParts(date) {
+  if (Number.isNaN(date.getTime())) return null;
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Yakutsk",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    weekday: "long",
+    hourCycle: "h23",
+  }).formatToParts(date);
+  const get = (type) => parts.find((part) => part.type === type)?.value || "";
+  const weekdayEn = get("weekday").toLowerCase();
+  const weekdayIndex = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ].indexOf(weekdayEn);
+  return {
+    year: Number(get("year")),
+    month: Number(get("month")) - 1,
+    day: Number(get("day")),
+    hour: Number(get("hour")),
+    minute: Number(get("minute")),
+    weekday: weekdayIndex >= 0 ? WEEKDAYS[weekdayIndex] : "",
+  };
+}
+
 function formatLongDate(date) {
-  if (Number.isNaN(date.getTime())) return "";
-  const weekday = WEEKDAYS[date.getDay()];
-  const labeled = weekday.charAt(0).toUpperCase() + weekday.slice(1);
-  return `${labeled}, ${date.getDate()} ${MONTHS_GEN[date.getMonth()]} ${date.getFullYear()}`;
+  const parts = yakutskParts(date);
+  if (!parts) return "";
+  const labeled = parts.weekday.charAt(0).toUpperCase() + parts.weekday.slice(1);
+  return `${labeled}, ${parts.day} ${MONTHS_GEN[parts.month]} ${parts.year} г.`;
 }
 
 function formatShortDate(date) {
-  if (Number.isNaN(date.getTime())) return "";
-  return `${date.getDate()} ${MONTHS_GEN[date.getMonth()]} ${date.getFullYear()}`;
+  const parts = yakutskParts(date);
+  if (!parts) return "";
+  return `${parts.day} ${MONTHS_GEN[parts.month]} ${parts.year} г.`;
+}
+
+function formatTime(date) {
+  const parts = yakutskParts(date);
+  if (!parts) return "";
+  return `${pad(parts.hour)}:${pad(parts.minute)}`;
+}
+
+function plural(n, one, few, many) {
+  const n10 = n % 10;
+  const n100 = n % 100;
+  if (n10 === 1 && n100 !== 11) return one;
+  if (n10 >= 2 && n10 <= 4 && (n100 < 12 || n100 > 14)) return few;
+  return many;
 }
 
 function applyCopy() {
@@ -87,9 +134,18 @@ function applyCopy() {
   });
 
   fill("event-line", eventLabel.charAt(0).toUpperCase() + eventLabel.slice(1));
-  fill("hero-kicker", EVENT_AT.getTime() ? `${formatShortDate(EVENT_AT)} · ${city}` : city);
-  fill("program-date", formatLongDate(EVENT_AT));
-  fill("close-meta", EVENT_AT.getTime() ? `${formatShortDate(EVENT_AT)} · ${city}` : city);
+  fill(
+    "hero-kicker",
+    EVENT_AT.getTime() ? `${formatShortDate(EVENT_AT)} · ${formatTime(EVENT_AT)} · ${city}` : city
+  );
+  fill(
+    "event-when",
+    EVENT_AT.getTime() ? `${formatLongDate(EVENT_AT)} · ${formatTime(EVENT_AT)}` : ""
+  );
+  fill(
+    "close-meta",
+    EVENT_AT.getTime() ? `${formatLongDate(EVENT_AT)} · ${city}` : city
+  );
   fill("venue-name", cfg.venue?.name || "Банкетный зал");
 
   const addressParts = [cfg.venue?.address, cfg.venue?.floor].filter(Boolean);
@@ -108,11 +164,12 @@ function applyCopy() {
 
 function renderCalendar(date) {
   const root = document.getElementById("calendar");
-  if (!root || Number.isNaN(date.getTime())) return;
+  const parts = yakutskParts(date);
+  if (!root || !parts) return;
 
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const marked = date.getDate();
+  const year = parts.year;
+  const month = parts.month;
+  const marked = parts.day;
   const first = new Date(year, month, 1);
   const startWeekday = (first.getDay() + 6) % 7;
   const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -205,26 +262,21 @@ function bindMaps() {
     wrap.hidden = false;
   }
 
-  if (links && (venue.yandex || venue.twogis)) {
-    const parts = [];
-    if (venue.yandex) {
-      parts.push(
-        `<a class="text-link" href="${venue.yandex}" target="_blank" rel="noreferrer">Посмотреть на карте</a>`
-      );
-    }
-    if (venue.yandex && venue.twogis) {
-      parts.push('<span aria-hidden="true"> · </span>');
-    }
-    if (venue.twogis) {
-      parts.push(
-        `<a class="text-link" href="${venue.twogis}" target="_blank" rel="noreferrer">Маршрут в 2ГИС</a>`
-      );
-    }
-    links.innerHTML = parts.join("");
-    links.hidden = false;
-  }
+  if (links) links.hidden = true;
 
   if (note) note.hidden = hasExactPlace;
+}
+
+function setPhoto(el, src, className) {
+  if (!el || !src) return;
+  let img = el.tagName === "IMG" ? el : el.querySelector("img");
+  if (!img) {
+    img = document.createElement("img");
+    if (className) img.className = className;
+    el.prepend(img);
+  }
+  img.src = src;
+  el.classList.add("has-photo");
 }
 
 function bindPhotos() {
@@ -238,31 +290,20 @@ function bindPhotos() {
   }
 
   if (photos.hero && hero) {
-    const img = document.createElement("img");
-    img.src = photos.hero;
-    img.alt = cfg.honoree || "Людмила";
-    hero.prepend(img);
-    hero.classList.add("has-photo");
+    setPhoto(hero, photos.hero);
+    const img = hero.querySelector("img");
+    if (img) img.alt = cfg.honoree || "Людмила";
   }
 
-  const plates = Array.isArray(photos.plates) ? photos.plates.filter(Boolean) : [];
-  const anchors = letter.querySelectorAll(".divider");
-  plates.forEach((src, index) => {
-    const section = document.createElement("section");
-    section.className = "plate plate-photo";
-    section.innerHTML = `<img src="${src}" alt="" />`;
-    const anchor = anchors[index] || letter.querySelector(".rsvp");
-    if (anchor) anchor.before(section);
-  });
+  const introPhoto = letter.querySelector(".is-intro-photo");
+  if (photos.intro) setPhoto(introPhoto, photos.intro);
+
+  const rsvpPhoto = letter.querySelector(".is-rsvp-photo");
+  if (photos.rsvp) setPhoto(rsvpPhoto, photos.rsvp);
 
   const close = letter.querySelector(".close");
   if (photos.close && close) {
-    const img = document.createElement("img");
-    img.className = "close-photo";
-    img.src = photos.close;
-    img.alt = "";
-    close.prepend(img);
-    close.classList.add("has-photo");
+    setPhoto(close, photos.close, "close-photo");
   }
 }
 
@@ -274,9 +315,12 @@ function showHint(message, isError) {
 }
 
 function guestNames() {
+  const full = nameInput ? nameInput.value.trim() : "";
+  const parts = full.split(/\s+/).filter(Boolean);
   return {
-    last: lastInput ? lastInput.value.trim() : "",
-    first: firstInput ? firstInput.value.trim() : "",
+    full,
+    first: parts[0] || "",
+    last: parts.slice(1).join(" "),
   };
 }
 
@@ -301,15 +345,15 @@ function messengerHref(kind, last, first) {
 }
 
 function sendRsvp(kind) {
-  const { last, first } = guestNames();
-  if (!last || !first) {
-    showHint("Заполните фамилию и имя.", true);
-    if (!last && lastInput) lastInput.focus();
-    else if (firstInput) firstInput.focus();
+  const { last, first, full } = guestNames();
+  if (!full || !first || !last) {
+    showHint("Напишите имя и фамилию.", true);
+    if (nameInput) nameInput.focus();
     return;
   }
 
   const payload = {
+    name: full,
     last,
     first,
     answer: kind,
@@ -343,12 +387,15 @@ function sendRsvp(kind) {
 function bindMaxGroup() {
   if (!maxGroupLink) return;
   const href = String(cfg.maxGroupLink || "").trim();
-  if (!href.startsWith("http")) {
-    maxGroupLink.hidden = true;
+  maxGroupLink.hidden = false;
+  if (href.startsWith("http")) {
+    maxGroupLink.href = href;
+    maxGroupLink.setAttribute("target", "_blank");
     return;
   }
-  maxGroupLink.href = href;
-  maxGroupLink.hidden = false;
+  maxGroupLink.href = "#";
+  maxGroupLink.removeAttribute("target");
+  maxGroupLink.addEventListener("click", (event) => event.preventDefault());
 }
 
 function bindMusic() {
@@ -373,19 +420,26 @@ function bindMusic() {
   music.hasInviteTrack = () => ready;
 }
 
+function openLetter() {
+  if (!envelope || !letter) return;
+  envelope.hidden = true;
+  letter.hidden = false;
+  envelope.setAttribute("aria-hidden", "true");
+  window.scrollTo(0, 0);
+  if (music && music.hasInviteTrack && music.hasInviteTrack()) {
+    music.volume = 0.45;
+    music.play().catch(() => {});
+    if (musicBtn) musicBtn.hidden = false;
+  }
+  window.setTimeout(startReveals, 80);
+}
+
 if (openBtn && envelope && letter) {
-  openBtn.addEventListener("click", () => {
-    envelope.hidden = true;
-    letter.hidden = false;
-    envelope.setAttribute("aria-hidden", "true");
-    window.scrollTo(0, 0);
-    if (music && music.hasInviteTrack && music.hasInviteTrack()) {
-      music.volume = 0.45;
-      music.play().catch(() => {});
-      if (musicBtn) musicBtn.hidden = false;
-    }
-    window.setTimeout(startReveals, 80);
-  });
+  openBtn.addEventListener("click", openLetter);
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("open")) {
+    openLetter();
+  }
 } else if (letter) {
   letter.hidden = false;
   startReveals();
@@ -437,13 +491,13 @@ function startReveals() {
 
   letterEl
     .querySelectorAll(
-      ".hero-copy > *, .flourish, .script-head, .lead, .cal, .countdown, .text-link, .calendar-btn, .program-date, .program-list li, .place, .addr, .map-bleed, .map-links, .dress p, .gifts p, .words p, .rsvp > p, .guest-grid, .rsvp-row, .swatches, .max-group p, .close-copy > *, .divider, .note"
+      ".hero-copy > *, .script-head, .intro p, .cal, .event-when, .countdown, .place, .addr, .map-bleed, .map-links, .rsvp > p, .guest-grid, .rsvp-row, .max-group p, .close-copy > *, .note"
     )
     .forEach((el) => el.classList.add("soft"));
 
   const groups = [
     ...letterEl.querySelectorAll(
-      ".hero, .hero-copy, .intro, .when, .program-block > .script-head, .program-block > .program-date, .program-list li, .where, .dress, .gifts, .words, .rsvp, .max-group, .plate-photo, .close, .divider"
+      ".hero, .hero-copy, .intro, .when, .where, .rsvp, .max-group, .plate-photo, .close"
     ),
   ];
 
@@ -503,10 +557,10 @@ function tick() {
   const min = Math.floor((diff % 3600000) / 60000);
   const sec = Math.floor((diff % 60000) / 1000);
   root.innerHTML = [
-    [day, "дней"],
-    [hour, "часов"],
-    [min, "минут"],
-    [sec, "секунд"],
+    [day, plural(day, "день", "дня", "дней")],
+    [hour, plural(hour, "час", "часа", "часов")],
+    [min, plural(min, "минута", "минуты", "минут")],
+    [sec, plural(sec, "секунда", "секунды", "секунд")],
   ]
     .map(([n, label]) => `<div><strong>${pad(n)}</strong><span>${label}</span></div>`)
     .join("");

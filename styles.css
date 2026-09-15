@@ -234,6 +234,10 @@ h1 {
   background: #1a0c10;
 }
 
+.hero.has-photo .hero-art {
+  display: none;
+}
+
 .hero img,
 .plate-photo img {
   width: 100%;
@@ -245,7 +249,7 @@ h1 {
   position: absolute;
   inset: 0;
   height: 100dvh;
-  object-position: center 30%;
+  object-position: center 18%;
 }
 
 .hero-art {
@@ -266,7 +270,12 @@ h1 {
 .hero-veil {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(18, 8, 12, 0.08) 20%, rgba(18, 8, 12, 0.78));
+  background: linear-gradient(
+    180deg,
+    rgba(18, 8, 12, 0.04) 28%,
+    rgba(18, 8, 12, 0.42) 62%,
+    rgba(18, 8, 12, 0.82) 100%
+  );
 }
 
 .hero-copy {
@@ -281,6 +290,8 @@ h1 {
 .hero-copy .kicker {
   color: rgba(246, 239, 230, 0.72);
   margin-bottom: 14px;
+  letter-spacing: 0.14em;
+  line-height: 1.55;
 }
 
 h1 {
@@ -296,24 +307,41 @@ h1 {
   color: var(--gold);
 }
 
+.hero-age {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  margin: 12px 0 0;
+  color: rgba(246, 239, 230, 0.92);
+}
+
 .scroll-hint {
   margin: 28px 0 0;
   font-size: 0.68rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(246, 239, 230, 0.7);
+  color: rgba(246, 239, 230, 0.82);
 }
 
 .plate-photo {
   margin: 0;
-  height: 62vh;
+  height: 78vh;
   overflow: hidden;
   background: var(--wine);
 }
 
 .plate-photo img {
-  height: 62vh;
-  object-position: center 40%;
+  height: 78vh;
+  object-position: center 20%;
+}
+
+.plate-photo.is-intro-photo img {
+  object-position: center 18%;
+}
+
+.plate-photo.is-rsvp-photo img {
+  object-position: center 22%;
 }
 
 .divider {
@@ -342,6 +370,20 @@ h1 {
   background: var(--paper);
 }
 
+.when {
+  padding-bottom: 20px;
+}
+
+.where {
+  padding-top: 28px;
+}
+
+.intro > p:not(.script-head),
+.rsvp > p,
+.max-group > p {
+  margin: 0;
+}
+
 .flourish {
   width: 120px;
   height: 24px;
@@ -368,9 +410,17 @@ h1 {
 }
 
 .program-date,
+.event-when,
 .addr {
   color: var(--muted);
   margin: 4px 0;
+}
+
+.event-when {
+  margin: 12px 0 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
 .program-date {
@@ -607,10 +657,10 @@ h1 {
 
 .guest-grid label {
   display: grid;
-  gap: 6px;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  gap: 8px;
+  font-size: 0.82rem;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--muted);
 }
 
@@ -619,12 +669,15 @@ h1 {
   font-size: 1rem;
   letter-spacing: 0;
   text-transform: none;
-  padding: 12px 0;
-  border: 0;
-  border-bottom: 1px solid var(--line);
-  border-radius: 0;
-  background: transparent;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
   color: var(--ink);
+}
+
+.guest-grid input::placeholder {
+  color: color-mix(in srgb, var(--muted) 70%, transparent);
 }
 
 .rsvp-row {
@@ -645,7 +698,7 @@ h1 {
 
 .close {
   position: relative;
-  min-height: 52vh;
+  min-height: 100dvh;
   text-align: center;
   color: #f6efe6;
   background: #1a0c10;
@@ -666,8 +719,10 @@ h1 {
 
 .close-photo {
   width: 100%;
-  min-height: 52vh;
+  min-height: 100dvh;
+  height: 100dvh;
   object-fit: cover;
+  object-position: center 42%;
   display: block;
 }
 
@@ -696,8 +751,8 @@ h1 {
 
 .close-meta {
   margin: 0;
-  font-size: 0.68rem;
-  letter-spacing: 0.22em;
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgba(246, 239, 230, 0.72);
 }
