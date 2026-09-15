@@ -6,7 +6,7 @@
     <title>Юбилей Людмилы</title>
     <meta
       name="description"
-      content="Приглашение на юбилей Людмилы. Тёплый вечер для родных и друзей."
+      content="Приглашение на юбилей Людмилы. 26 сентября 2026, ресторан «Новый Пекин», Якутск."
     />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Manrope:wght@400;500;600&family=Marck+Script&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=1" />
+    <link rel="stylesheet" href="styles.css?v=2" />
   </head>
   <body>
     <div class="stage">
@@ -35,176 +35,66 @@
       </div>
 
       <article id="letter" class="letter" hidden>
-        <header class="hero plate" id="hero">
-          <div class="hero-art" aria-hidden="true">
-            <svg class="wreath" viewBox="0 0 320 360" fill="none">
-              <path
-                d="M160 42c-38 18-68 58-74 108 22-28 48-46 74-54 26 8 52 26 74 54-6-50-36-90-74-108z"
-                stroke="currentColor"
-                stroke-width="1.2"
-              />
-              <path
-                d="M86 168c8 54 34 96 74 128 40-32 66-74 74-128"
-                stroke="currentColor"
-                stroke-width="1.2"
-              />
-              <circle cx="160" cy="88" r="3" fill="currentColor" />
-              <circle cx="112" cy="150" r="2.2" fill="currentColor" />
-              <circle cx="208" cy="150" r="2.2" fill="currentColor" />
-              <circle cx="132" cy="232" r="2" fill="currentColor" />
-              <circle cx="188" cy="232" r="2" fill="currentColor" />
-            </svg>
-          </div>
+        <header class="hero plate has-photo" id="hero">
+          <img src="photos/01-envelope.jpg" alt="Людмила" />
           <div class="hero-veil"></div>
           <div class="hero-copy">
-            <p class="kicker" data-fill="hero-kicker">Якутск</p>
+            <p class="kicker" data-fill="hero-kicker">26 сентября 2026 г. · 18:00 · Якутск</p>
             <h1 data-fill="honoree">Людмила</h1>
-            <p class="hero-event" data-fill="event-line">Юбилей</p>
+            <p class="hero-age" data-fill="age-line">60 лет</p>
             <p class="scroll-hint">листайте вниз</p>
           </div>
         </header>
 
         <section class="block intro">
-          <svg class="flourish" viewBox="0 0 120 24" aria-hidden="true">
-            <path
-              d="M4 12h28 M88 12h28 M44 12c8-10 24-10 32 0-8 10-24 10-32 0z"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1"
-            />
-          </svg>
-          <p class="script-head">Дорогие наши</p>
-          <p class="lead">
-            Приходите как к близким. В этот вечер нам важно не торжество ради
-            торжества, а то, что вы будете рядом — за столом, в разговоре,
-            в общей радости и тёплых воспоминаниях.
+          <p class="script-head">Дорогие коллеги</p>
+          <p>
+            Буду рада увидеть вас 26 сентября в ресторане «Новый Пекин». Хочется
+            собраться за одним столом, поговорить и отметить этот день вместе.
           </p>
         </section>
 
-        <section class="divider" aria-hidden="true">
-          <span>Л</span>
+        <section class="plate plate-photo is-intro-photo">
+          <img src="photos/02-hero.jpg" alt="" />
         </section>
 
         <section class="block when" aria-labelledby="when-title">
           <p class="script-head" id="when-title">Дата</p>
           <div id="calendar" class="cal" role="img"></div>
+          <p class="event-when" data-fill="event-when"></p>
           <div id="countdown" class="countdown" aria-live="polite"></div>
-          <button type="button" id="add-calendar" class="text-link calendar-btn">
-            добавить в календарь
-          </button>
-        </section>
-
-        <section class="block program-block" aria-labelledby="program-title">
-          <p class="script-head" id="program-title">Программа</p>
-          <p class="program-date" data-fill="program-date"></p>
-          <ol class="program-list">
-            <li>
-              <time datetime="17:00">17:00</time>
-              <div>
-                <strong>Сбор гостей</strong>
-                <p>Время обняться, оставить пальто и выдохнуть</p>
-              </div>
-            </li>
-            <li>
-              <time datetime="17:30">17:30</time>
-              <div>
-                <strong>Поздравления</strong>
-                <p>Слова, тосты и короткие истории</p>
-              </div>
-            </li>
-            <li>
-              <time datetime="18:00">18:00</time>
-              <div>
-                <strong>Праздничный стол</strong>
-                <p>Начало застолья</p>
-              </div>
-            </li>
-            <li>
-              <time datetime="20:00">20:00</time>
-              <div>
-                <strong>Торт</strong>
-                <p>Сладкий момент вечера</p>
-              </div>
-            </li>
-            <li>
-              <time datetime="21:00">21:00</time>
-              <div>
-                <strong>Танцы и разговоры</strong>
-                <p>Пока есть силы и настроение</p>
-              </div>
-            </li>
-            <li>
-              <time datetime="23:00">23:00</time>
-              <div>
-                <strong>Завершение</strong>
-                <p>Тёплые пожелания на дорожку</p>
-              </div>
-            </li>
-          </ol>
-        </section>
-
-        <section class="divider" aria-hidden="true">
-          <span>♥</span>
         </section>
 
         <section class="block where" aria-labelledby="where-title">
           <p class="script-head" id="where-title">Локация</p>
-          <p class="place" data-fill="venue-name">Банкетный зал</p>
-          <p class="addr" data-fill="venue-address">г. Якутск</p>
+          <p class="place" data-fill="venue-name">Ресторан «Новый Пекин»</p>
+          <p class="addr" data-fill="venue-address">Якутск<br />ул. Герцена, 3</p>
           <div class="map-bleed" id="map-wrap" hidden>
             <iframe class="map-frame" id="map-frame" title="Карта места праздника" allowfullscreen></iframe>
           </div>
           <p class="map-links" id="map-links" hidden></p>
-          <p class="note" id="venue-note">
-            Точный зал подставим, как только его подтвердят. Город уже Якутск.
-          </p>
         </section>
 
-        <section class="block dress" aria-labelledby="dress-title">
-          <p class="script-head" id="dress-title">Дресс-код</p>
-          <p>
-            Вечер просим держать торжественным: платья и костюмы в глубоких
-            спокойных тонах — бордо, золото, кремовый, тёплый изумруд.
-          </p>
-          <p>Без спортивного стиля и кислотных цветов: они спорят с залом и камерой.</p>
-          <div class="swatches" aria-hidden="true">
-            <span style="background: #7a2e3e"></span>
-            <span style="background: #c9a36a"></span>
-            <span style="background: #f3e6d4"></span>
-            <span style="background: #3e5a49"></span>
-            <span style="background: #5c4a3a"></span>
-            <span style="background: #d8c4b0"></span>
-          </div>
-        </section>
-
-        <section class="block gifts" aria-labelledby="gifts-title">
-          <p class="script-head" id="gifts-title">Подарки</p>
-          <p>
-            Самое дорогое — ваше присутствие. Если хотите порадовать именинницу,
-            достаточно тёплого слова, небольшого букета или конверта.
-            Крупные коробки в зал лучше не нести.
-          </p>
-        </section>
-
-        <section class="block words" aria-labelledby="words-title">
-          <p class="script-head" id="words-title">Слова</p>
-          <p>
-            В тостах нам ближе тепло и живые истории, чем длинные официальные речи.
-            Если есть воспоминание, от которого хочется улыбнуться — это лучший подарок.
-          </p>
+        <section class="plate plate-photo is-rsvp-photo">
+          <img src="photos/03.jpg" alt="" />
         </section>
 
         <section class="block rsvp" aria-labelledby="rsvp-title">
-          <p class="script-head" id="rsvp-title">Ответ</p>
-          <p>Напишите фамилию и имя сами — так нам будет проще собрать стол.</p>
+          <p class="script-head" id="rsvp-title">Анкета гостя</p>
+          <p>
+            Дорогие коллеги, будем очень благодарны, если вы подтвердите свое
+            присутствие, заполнив анкету ниже.
+          </p>
           <div class="guest-grid">
             <label>
-              Фамилия
-              <input id="guest-last" type="text" autocomplete="family-name" required />
-            </label>
-            <label>
-              Имя
-              <input id="guest-first" type="text" autocomplete="given-name" required />
+              Ваше имя и фамилия
+              <input
+                id="guest-name"
+                type="text"
+                autocomplete="name"
+                placeholder="Иван Иванов"
+                required
+              />
             </label>
           </div>
           <div class="rsvp-row">
@@ -217,21 +107,21 @@
         <section class="block max-group" aria-labelledby="maxgroup-title">
           <p class="script-head" id="maxgroup-title">Фото</p>
           <p>
-            Если появится группа в MAX, сюда можно будет скидывать снимки вечера.
-            Так все кадры соберутся в одном месте, и после праздника можно будет
-            поделиться общим альбомом.
+            Мы создали группу в MAX, куда можно скидывать фото с этого вечера.
+            Так все снимки соберутся в одном месте, и после праздника мы поделимся
+            общим альбомом.
           </p>
           <p class="map-links">
-            <a class="btn ghost" id="max-group-link" href="#" target="_blank" rel="noreferrer" hidden
+            <a class="btn ghost" id="max-group-link" href="#" target="_blank" rel="noreferrer"
               >Открыть группу в MAX</a
             >
           </p>
         </section>
 
-        <footer class="close">
-          <div class="close-art" aria-hidden="true"></div>
+        <footer class="close has-photo">
+          <img class="close-photo" src="photos/04.jpg" alt="" />
           <div class="close-copy">
-            <p class="close-hello">С любовью,</p>
+            <p class="close-hello">С теплом,</p>
             <p class="close-names" data-fill="honoree">Людмила</p>
             <p class="close-meta" data-fill="close-meta">Якутск</p>
           </div>
@@ -252,6 +142,6 @@
       </button>
     </div>
     <script src="config.js"></script>
-    <script src="script.js?v=1"></script>
+    <script src="script.js?v=2"></script>
   </body>
 </html>
