@@ -1,11 +1,10 @@
 {
-  "name": "Lyudmila's Anniversary",
-  "install": "npm ci",
+  "name": "Lyudmila's Anniversary Invitation",
   "terminals": [
     {
-      "name": "dev-server",
-      "command": "npm run dev"
+      "name": "static-server",
+      "command": "python3 -m http.server 8766"
     }
   ],
-  "ports": [5173]
+  "ports": [8766]
 }

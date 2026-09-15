@@ -1,52 +1,41 @@
-# Lyudmila's Anniversary
+# Приглашение на юбилей Людмилы
 
-A small, modern single-page web app to celebrate Lyudmila's anniversary — a hero
-banner, a live countdown to the party, a story timeline, and an interactive
-guestbook where guests can leave wishes (persisted in the browser via
-`localStorage`).
+Электронное приглашение в том же духе, что и свадебное: конверт, письмо, дата, программа, ответ гостей. Открой `index.html` на телефоне — так смотрят гости.
 
-## Tech stack
+После публикации на GitHub Pages ссылка будет такой:
 
-- [Vite](https://vitejs.dev/) 5
-- [React](https://react.dev/) 18 + TypeScript
-- ESLint (flat config)
+https://aytalykt-lab.github.io/Lyudmila-s-anniversary/
 
-## Getting started
+## Как открыть сейчас
 
-Requirements: Node.js 20+ and npm.
+1. Двойной клик по `index.html` или из этой папки:
+   `python3 -m http.server 8766` → http://127.0.0.1:8766/
+2. Все факты вечера правятся в `config.js`: имя, возраст, дата, зал, карта, WhatsApp / Max, ссылка на таблицу гостей.
 
-```bash
-npm ci        # install dependencies from the lockfile (use `npm install` on first setup)
-npm run dev   # start the dev server at http://localhost:5173
-```
+## Что уже внутри
 
-## Scripts
+- Конверт с печатью «Л» → открытие письма
+- Юбилейная палитра: бордо, золото, кремовый
+- Дата и таймер (черновик: 5 декабря 2026, 17:00, Якутск)
+- Программа вечера
+- Локация — зал подставим, как будет точный адрес
+- Дресс-код и заметка про подарки
+- Ответ гостя: фамилия, имя, «Приду» / «Не приду»
+- Добавить в календарь
 
-| Command         | Description                                   |
-| --------------- | --------------------------------------------- |
-| `npm run dev`     | Start the Vite dev server on port 5173.       |
-| `npm run build`   | Type-check and build the production bundle.   |
-| `npm run preview` | Preview the production build on port 4173.    |
-| `npm run lint`    | Run ESLint over the project.                  |
+## Что прислать — и сразу подставим
 
-## Project structure
+- Точную дату, время и возраст
+- Название зала, адрес, ссылки на Яндекс.Карты и 2ГИС
+- Номер WhatsApp или ссылку на чат Max
+- Портретные фото в папку `photos/`
+- Музыку: файл `audio/music.mp3`
 
-```
-index.html            # App entry HTML
-src/
-  main.tsx            # React bootstrap
-  App.tsx             # Page composition
-  config.ts           # Celebration details and story milestones
-  index.css           # Global styles
-  components/
-    Hero.tsx
-    Countdown.tsx
-    Timeline.tsx
-    Guestbook.tsx     # Interactive wishes (localStorage-backed)
-```
+Текст приглашения черновой: если пришлют свой — поставим слово в слово.
 
-## Cloud Agent environment
+## Окружение Cursor Cloud Agent
 
-`.cursor/environment.json` configures the Cursor Cloud Agent environment: it runs
-`npm ci` to install dependencies and launches the dev server (`npm run dev`) in a
-persistent `dev-server` terminal on port 5173.
+Это статический сайт без сборки и зависимостей. `.cursor/environment.json`
+поднимает простой статический сервер в терминале `static-server`
+(`python3 -m http.server 8766`) и публикует порт `8766`, чтобы приглашение
+можно было открыть прямо из Cloud Agent.
