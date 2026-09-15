@@ -17,7 +17,8 @@ window.INVITE_CONFIG = {
   },
 
   // Google Apps Script URL (оканчивается на /exec). Ответы гостей пишутся в таблицу.
-  sheetsUrl: "",
+  sheetsUrl:
+    "https://script.google.com/macros/s/AKfycbx5ydUdZb7Z7OYpXY8xzKkJxW5yvPnlot-0ia0u3ctDOe3gHuRviaPlFYzcfRGh2ubvFA/exec",
 
   // Мессенджер для ответа: "whatsapp" | "max" | ""
   messenger: "whatsapp",
