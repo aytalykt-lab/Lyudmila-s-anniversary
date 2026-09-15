@@ -39,5 +39,5 @@ window.INVITE_CONFIG = {
   },
 
   // Положите файл audio/music.mp3 и укажите путь, если нужна музыка при открытии.
-  audio: "",
+  audio: "audio/music.mp3",
 };
