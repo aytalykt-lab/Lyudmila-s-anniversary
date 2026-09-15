@@ -32,10 +32,3 @@ https://aytalykt-lab.github.io/Lyudmila-s-anniversary/
 - Музыку: файл `audio/music.mp3`
 
 Текст приглашения черновой: если пришлют свой — поставим слово в слово.
-
-## Окружение Cursor Cloud Agent
-
-Это статический сайт без сборки и зависимостей. `.cursor/environment.json`
-поднимает простой статический сервер в терминале `static-server`
-(`python3 -m http.server 8766`) и публикует порт `8766`, чтобы приглашение
-можно было открыть прямо из Cloud Agent.
