@@ -1,16 +1,16 @@
 :root {
-  --paper: #f6efe6;
-  --paper-deep: #ead9c8;
-  --ink: #2a1714;
-  --muted: #7a6458;
-  --gold: #c9a36a;
-  --rose: #a45c62;
-  --rose-deep: #7a2e3e;
-  --wine: #4a1c28;
-  --line: rgba(74, 28, 40, 0.18);
-  --display: "Cormorant Garamond", "Times New Roman", serif;
-  --script: "Marck Script", "Segoe Script", cursive;
-  --sans: "Manrope", "Segoe UI", sans-serif;
+  --paper: #ffd4a8;
+  --paper-deep: #ffbf7a;
+  --ink: #3c1706;
+  --muted: #a34b16;
+  --gold: #ffb347;
+  --rose: #f07828;
+  --rose-deep: #e05a12;
+  --wine: #c2410c;
+  --line: rgba(194, 65, 12, 0.22);
+  --display: "Playfair Display", "Times New Roman", serif;
+  --script: "Great Vibes", "Segoe Script", cursive;
+  --sans: "Nunito", "Segoe UI", sans-serif;
 }
 
 *,
@@ -28,7 +28,7 @@ body {
 
 body {
   color: var(--ink);
-  background: #140c0e;
+  background: #c2410c;
   font-family: var(--sans);
   line-height: 1.6;
   font-size: 15px;
@@ -64,10 +64,10 @@ input {
   justify-content: center;
   text-align: center;
   padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
-  background-color: var(--wine);
+  background-color: #e85d04;
   background-image:
-    radial-gradient(circle at 50% 18%, rgba(201, 163, 106, 0.18), transparent 36%),
-    linear-gradient(180deg, rgba(20, 8, 12, 0.15) 0%, rgba(20, 8, 12, 0.55) 100%);
+    radial-gradient(circle at 50% 18%, rgba(255, 210, 140, 0.28), transparent 36%),
+    linear-gradient(180deg, rgba(194, 65, 12, 0.15) 0%, rgba(124, 45, 18, 0.55) 100%);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -76,14 +76,14 @@ input {
 
 .envelope.has-photo {
   background-image:
-    linear-gradient(180deg, rgba(20, 8, 12, 0.28) 0%, rgba(20, 8, 12, 0.62) 100%),
+    linear-gradient(180deg, rgba(194, 65, 12, 0.28) 0%, rgba(124, 45, 18, 0.62) 100%),
     var(--envelope-photo);
 }
 
 .env-ornament {
   position: absolute;
   inset: 22px;
-  border: 1px solid rgba(201, 163, 106, 0.35);
+  border: 1px solid rgba(255, 210, 140, 0.45);
   pointer-events: none;
 }
 
@@ -93,7 +93,7 @@ input {
   position: absolute;
   width: 18px;
   height: 18px;
-  border: 1px solid rgba(201, 163, 106, 0.55);
+  border: 1px solid rgba(255, 210, 140, 0.65);
 }
 
 .env-ornament::before {
@@ -161,15 +161,15 @@ h1 {
   width: 132px;
   height: 132px;
   border-radius: 50%;
-  border: 1px solid rgba(201, 163, 106, 0.7);
+  border: 1px solid rgba(255, 210, 140, 0.75);
   background:
-    radial-gradient(circle at 50% 38%, rgba(246, 239, 230, 0.16), transparent 58%),
-    radial-gradient(circle at 50% 50%, #8a3544, #4a1c28 72%);
-  color: #f6efe6;
+    radial-gradient(circle at 50% 38%, rgba(255, 247, 237, 0.18), transparent 58%),
+    radial-gradient(circle at 50% 50%, #f07828, #c2410c 72%);
+  color: #fff7ed;
   font-family: var(--display);
   line-height: 1.2;
   cursor: pointer;
-  box-shadow: 0 0 0 8px rgba(246, 239, 230, 0.08);
+  box-shadow: 0 0 0 8px rgba(255, 247, 237, 0.1);
   animation: sealPulse 2.8s ease-in-out infinite;
 }
 
@@ -225,13 +225,13 @@ h1 {
   position: relative;
   min-height: 100dvh;
   background:
-    radial-gradient(circle at 50% 30%, rgba(201, 163, 106, 0.16), transparent 42%),
-    linear-gradient(180deg, #3a1620 0%, #1a0c10 100%);
+    radial-gradient(circle at 50% 30%, rgba(255, 179, 71, 0.2), transparent 42%),
+    linear-gradient(180deg, #c2410c 0%, #7c2d12 100%);
   overflow: hidden;
 }
 
 .hero.has-photo {
-  background: #1a0c10;
+  background: #7c2d12;
 }
 
 .hero.has-photo .hero-art {
@@ -257,7 +257,7 @@ h1 {
   inset: 0;
   display: grid;
   place-items: center;
-  color: rgba(201, 163, 106, 0.55);
+  color: rgba(255, 179, 71, 0.55);
   pointer-events: none;
 }
 
@@ -272,9 +272,9 @@ h1 {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(18, 8, 12, 0.04) 28%,
-    rgba(18, 8, 12, 0.42) 62%,
-    rgba(18, 8, 12, 0.82) 100%
+    rgba(124, 45, 18, 0.04) 28%,
+    rgba(194, 65, 12, 0.38) 62%,
+    rgba(124, 45, 18, 0.88) 100%
   );
 }
 
@@ -325,14 +325,16 @@ h1 {
 }
 
 .plate-photo {
+  position: relative;
   margin: 0;
-  height: 78vh;
+  min-height: 100dvh;
+  height: 100dvh;
   overflow: hidden;
   background: var(--wine);
 }
 
 .plate-photo img {
-  height: 78vh;
+  height: 100dvh;
   object-position: center 20%;
 }
 
@@ -342,6 +344,31 @@ h1 {
 
 .plate-photo.is-rsvp-photo img {
   object-position: center 22%;
+}
+
+.photo-copy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: 88px 28px 40px;
+  background: linear-gradient(180deg, transparent, rgba(194, 65, 12, 0.92) 58%);
+  color: #fff7ed;
+  text-align: center;
+}
+
+.photo-copy .script-head {
+  color: #fff7ed;
+  margin-bottom: 12px;
+}
+
+.photo-copy p:not(.script-head) {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.18rem;
+  font-style: italic;
+  line-height: 1.45;
 }
 
 .divider {
@@ -378,7 +405,6 @@ h1 {
   padding-top: 28px;
 }
 
-.intro > p:not(.script-head),
 .rsvp > p,
 .max-group > p {
   margin: 0;
@@ -393,7 +419,7 @@ h1 {
 
 .script-head {
   font-family: var(--script);
-  font-size: 2.15rem;
+  font-size: 2.7rem;
   font-weight: 400;
   margin: 0 0 18px;
   color: var(--ink);
@@ -672,7 +698,7 @@ h1 {
   padding: 12px 14px;
   border: 1px solid var(--line);
   border-radius: 10px;
-  background: #fff;
+  background: #fff7ed;
   color: var(--ink);
 }
 
@@ -700,8 +726,8 @@ h1 {
   position: relative;
   min-height: 100dvh;
   text-align: center;
-  color: #f6efe6;
-  background: #1a0c10;
+  color: #fff7ed;
+  background: #7c2d12;
   overflow: hidden;
 }
 
@@ -709,8 +735,8 @@ h1 {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 30%, rgba(201, 163, 106, 0.2), transparent 46%),
-    linear-gradient(180deg, #3a1620, #140c0e);
+    radial-gradient(circle at 50% 30%, rgba(255, 179, 71, 0.25), transparent 46%),
+    linear-gradient(180deg, #e85d04, #7c2d12);
 }
 
 .close.has-photo .close-art {
@@ -732,7 +758,15 @@ h1 {
   right: 0;
   bottom: 0;
   padding: 72px 18px 40px;
-  background: linear-gradient(180deg, transparent, rgba(18, 8, 12, 0.78) 55%);
+  background: linear-gradient(180deg, transparent, rgba(124, 45, 18, 0.88) 55%);
+}
+
+.close-quote {
+  margin: 0 0 22px;
+  font-family: var(--display);
+  font-size: 1.18rem;
+  font-style: italic;
+  line-height: 1.45;
 }
 
 .close-hello {
@@ -797,11 +831,11 @@ h1 {
 @keyframes sealPulse {
   0%,
   100% {
-    box-shadow: 0 0 0 8px rgba(246, 239, 230, 0.08);
+    box-shadow: 0 0 0 8px rgba(255, 247, 237, 0.1);
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 0 0 16px rgba(246, 239, 230, 0.16);
+    box-shadow: 0 0 0 16px rgba(255, 247, 237, 0.2);
     transform: scale(1.03);
   }
 }

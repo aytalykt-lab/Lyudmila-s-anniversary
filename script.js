@@ -491,13 +491,13 @@ function startReveals() {
 
   letterEl
     .querySelectorAll(
-      ".hero-copy > *, .script-head, .intro p, .cal, .event-when, .countdown, .place, .addr, .map-bleed, .map-links, .rsvp > p, .guest-grid, .rsvp-row, .max-group p, .close-copy > *, .note"
+      ".hero-copy > *, .script-head, .photo-copy > *, .cal, .event-when, .countdown, .place, .addr, .map-bleed, .map-links, .rsvp > p, .guest-grid, .rsvp-row, .max-group p, .close-copy > *, .note"
     )
     .forEach((el) => el.classList.add("soft"));
 
   const groups = [
     ...letterEl.querySelectorAll(
-      ".hero, .hero-copy, .intro, .when, .where, .rsvp, .max-group, .plate-photo, .close"
+      ".hero, .hero-copy, .when, .where, .rsvp, .max-group, .plate-photo, .photo-copy, .close"
     ),
   ];
 
