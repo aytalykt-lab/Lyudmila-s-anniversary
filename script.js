@@ -45,8 +45,11 @@ const musicBtn = document.getElementById("music-toggle");
 const musicHint = document.querySelector("[data-music-hint]");
 const hint = document.getElementById("rsvp-hint");
 const maxGroupLink = document.getElementById("max-group-link");
-const LEAF_SVG =
-  '<svg viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M32 3c1.4 7.4 6.2 12.2 8.8 14.6 5.8-8.6 14.6-11 16.8-11.4-3.6 8.2-2.4 14.2 1.2 20.2 8.4-2.8 15.4-1 17.6.2-8.2 6-9.4 13.2-6.4 19.4-6.6-1.2-11.8 1.2-15.6 6.4 2.8 3.6 4.6 9.4 3.4 13.2-6.4-4-11.2-3.4-13.8-1.8V62h-4V63.4c-2.6-1.6-7.4-2.2-13.8 1.8-1.2-3.8.6-9.6 3.4-13.2-3.8-5.2-9-7.6-15.6-6.4 3-6.2 1.8-13.4-6.4-19.4 2.2-1.2 9.2-3 17.6-.2 3.6-6 4.8-12 1.2-20.2 2.2.4 11 2.8 16.8 11.4C25.8 15.2 30.6 10.4 32 3z"/></svg>';
+const LEAF_SVGS = [
+  '<svg viewBox="0 0 64 80" aria-hidden="true"><path fill="currentColor" d="M32 4c2 10 8 15 12 18 8-12 18-14 20-14-4 10-3 16 1 22 10-4 16-2 18 0-8 7-8 14-4 20-8-1-13 2-17 8 2 4 3 10 2 14-7-4-11-3-14-1v18h-4V71c-3-2-7-3-14 1-1-4 0-10 2-14-4-6-9-9-17-8 4-6 4-13-4-20 2-2 8-4 18 0 4-6 5-12 1-22 2 0 12 2 20 14 4-3 10-8 12-18z"/></svg>',
+  '<svg viewBox="0 0 32 44" aria-hidden="true"><path fill="currentColor" d="M16 2c8 8 13 14 13 22 0 8-6 14-13 18C9 38 3 32 3 24 3 16 8 10 16 2z"/><path fill="none" stroke="currentColor" stroke-width="1.6" d="M16 10v32"/></svg>',
+  '<svg viewBox="0 0 36 48" aria-hidden="true"><path fill="currentColor" d="M18 3c11 9 15 18 12 28-2 7-8 12-12 14-4-2-10-7-12-14C3 21 7 12 18 3z"/><path fill="none" stroke="currentColor" stroke-width="1.5" d="M18 14v32"/></svg>',
+];
 const LEAF_COLORS = ["#f59e0b", "#ea580c", "#c2410c", "#fb923c", "#b45309", "#dc2626", "#fbbf24", "#fdba74"];
 let openingInvite = false;
 
@@ -433,18 +436,18 @@ function prefersReducedMotion() {
 function spawnLeaves(root) {
   if (!root) return;
   root.innerHTML = "";
-  const count = prefersReducedMotion() ? 10 : 36;
+  const count = prefersReducedMotion() ? 12 : 48;
   for (let i = 0; i < count; i += 1) {
     const leaf = document.createElement("span");
     leaf.className = "leaf";
-    leaf.style.left = `${Math.random() * 110 - 5}%`;
-    leaf.style.setProperty("--delay", `${(i % 14) * 0.11 + Math.random() * 0.18}s`);
-    leaf.style.setProperty("--dur", `${2.5 + Math.random() * 1.7}s`);
-    leaf.style.setProperty("--x", `${Math.random() * 140 - 70}px`);
-    leaf.style.setProperty("--spin", `${160 + Math.random() * 520}deg`);
-    leaf.style.setProperty("--size", `${16 + Math.random() * 24}px`);
+    leaf.style.left = `${Math.random() * 112 - 6}%`;
+    leaf.style.setProperty("--delay", `${-Math.random() * 2.4}s`);
+    leaf.style.setProperty("--dur", `${2.8 + Math.random() * 1.8}s`);
+    leaf.style.setProperty("--x", `${Math.random() * 160 - 80}px`);
+    leaf.style.setProperty("--spin", `${120 + Math.random() * 560}deg`);
+    leaf.style.setProperty("--size", `${22 + Math.random() * 28}px`);
     leaf.style.color = LEAF_COLORS[i % LEAF_COLORS.length];
-    leaf.innerHTML = LEAF_SVG;
+    leaf.innerHTML = LEAF_SVGS[i % LEAF_SVGS.length];
     root.appendChild(leaf);
   }
 }
