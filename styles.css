@@ -111,8 +111,62 @@ input {
 }
 
 .envelope[hidden],
-.letter[hidden] {
+.letter[hidden],
+.autumn-scene[hidden] {
   display: none !important;
+}
+
+.autumn-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 12%, rgba(255, 224, 170, 0.42), transparent 40%),
+    linear-gradient(180deg, #ea580c 0%, #9a3412 78%, #7c2d12 100%);
+  transition: opacity 0.95s ease;
+}
+
+.autumn-scene.is-done {
+  opacity: 0;
+}
+
+.autumn-leaves {
+  position: absolute;
+  inset: 0;
+}
+
+.leaf {
+  position: absolute;
+  top: -12%;
+  width: var(--size, 24px);
+  height: var(--size, 24px);
+  color: #ea580c;
+  opacity: 0;
+  animation: leafFall var(--dur, 3.1s) linear var(--delay, 0s) forwards;
+  filter: drop-shadow(0 3px 3px rgba(60, 23, 6, 0.28));
+  will-change: transform, opacity;
+}
+
+.leaf svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes leafFall {
+  0% {
+    transform: translate3d(0, -6vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate3d(var(--x, 40px), 112vh, 0) rotate(var(--spin, 360deg));
+    opacity: 0.72;
+  }
 }
 
 .env-kicker,
@@ -908,6 +962,15 @@ h1 {
 @media (prefers-reduced-motion: reduce) {
   .seal {
     animation: none;
+  }
+
+  .leaf {
+    animation: none;
+    opacity: 0.85;
+  }
+
+  .autumn-scene {
+    transition: none;
   }
 
   .soft,

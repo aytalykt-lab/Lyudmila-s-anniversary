@@ -37,12 +37,18 @@ const EVENT_END = new Date(cfg.endsAt || "2026-09-26T23:00:00+09:00");
 const openBtn = document.getElementById("open-invite");
 const envelope = document.getElementById("envelope");
 const letter = document.getElementById("letter");
+const autumnScene = document.getElementById("autumn-scene");
+const autumnLeaves = document.getElementById("autumn-leaves");
 const nameInput = document.getElementById("guest-name");
 const music = document.getElementById("bg-music");
 const musicBtn = document.getElementById("music-toggle");
 const musicHint = document.querySelector("[data-music-hint]");
 const hint = document.getElementById("rsvp-hint");
 const maxGroupLink = document.getElementById("max-group-link");
+const LEAF_SVG =
+  '<svg viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M32 3c1.4 7.4 6.2 12.2 8.8 14.6 5.8-8.6 14.6-11 16.8-11.4-3.6 8.2-2.4 14.2 1.2 20.2 8.4-2.8 15.4-1 17.6.2-8.2 6-9.4 13.2-6.4 19.4-6.6-1.2-11.8 1.2-15.6 6.4 2.8 3.6 4.6 9.4 3.4 13.2-6.4-4-11.2-3.4-13.8-1.8V62h-4V63.4c-2.6-1.6-7.4-2.2-13.8 1.8-1.2-3.8.6-9.6 3.4-13.2-3.8-5.2-9-7.6-15.6-6.4 3-6.2 1.8-13.4-6.4-19.4 2.2-1.2 9.2-3 17.6-.2 3.6-6 4.8-12 1.2-20.2 2.2.4 11 2.8 16.8 11.4C25.8 15.2 30.6 10.4 32 3z"/></svg>';
+const LEAF_COLORS = ["#f59e0b", "#ea580c", "#c2410c", "#fb923c", "#b45309", "#dc2626", "#fbbf24", "#fdba74"];
+let openingInvite = false;
 
 function fill(name, value) {
   document.querySelectorAll(`[data-fill="${name}"]`).forEach((el) => {
@@ -417,21 +423,105 @@ function bindMusic() {
     if (musicHint) musicHint.hidden = true;
   });
 
-  music.hasInviteTrack = () => ready;
+  music.hasInviteTrack = () => ready || Boolean(music.src);
+}
+
+function prefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function spawnLeaves(root) {
+  if (!root) return;
+  root.innerHTML = "";
+  const count = prefersReducedMotion() ? 10 : 36;
+  for (let i = 0; i < count; i += 1) {
+    const leaf = document.createElement("span");
+    leaf.className = "leaf";
+    leaf.style.left = `${Math.random() * 110 - 5}%`;
+    leaf.style.setProperty("--delay", `${(i % 14) * 0.11 + Math.random() * 0.18}s`);
+    leaf.style.setProperty("--dur", `${2.5 + Math.random() * 1.7}s`);
+    leaf.style.setProperty("--x", `${Math.random() * 140 - 70}px`);
+    leaf.style.setProperty("--spin", `${160 + Math.random() * 520}deg`);
+    leaf.style.setProperty("--size", `${16 + Math.random() * 24}px`);
+    leaf.style.color = LEAF_COLORS[i % LEAF_COLORS.length];
+    leaf.innerHTML = LEAF_SVG;
+    root.appendChild(leaf);
+  }
+}
+
+function unlockMusic() {
+  if (!music) return;
+  const src = String(cfg.audio || "").trim();
+  if (!src) return;
+  music.muted = true;
+  const play = music.play();
+  const reset = () => {
+    music.pause();
+    music.currentTime = 0;
+    music.muted = false;
+  };
+  if (play && typeof play.then === "function") {
+    play.then(reset).catch(() => {
+      music.muted = false;
+    });
+  } else {
+    reset();
+  }
+}
+
+function startInviteMusic() {
+  if (!music) return;
+  const src = String(cfg.audio || "").trim();
+  if (!src) return;
+  music.muted = false;
+  music.volume = 0.45;
+  const play = music.play();
+  const showBtn = (playing) => {
+    if (!musicBtn) return;
+    musicBtn.hidden = false;
+    musicBtn.setAttribute("aria-pressed", playing ? "true" : "false");
+    musicBtn.setAttribute("aria-label", playing ? "Выключить музыку" : "Включить музыку");
+    musicBtn.classList.toggle("is-off", !playing);
+  };
+  if (play && typeof play.then === "function") {
+    play.then(() => showBtn(true)).catch(() => showBtn(false));
+  } else {
+    showBtn(!music.paused);
+  }
+}
+
+function revealLetterWithMusic() {
+  if (!letter) return;
+  letter.hidden = false;
+  window.scrollTo(0, 0);
+  startInviteMusic();
+  window.setTimeout(startReveals, 40);
+  if (autumnScene) {
+    window.requestAnimationFrame(() => {
+      autumnScene.classList.add("is-done");
+    });
+    window.setTimeout(() => {
+      autumnScene.hidden = true;
+      autumnScene.setAttribute("aria-hidden", "true");
+      if (autumnLeaves) autumnLeaves.innerHTML = "";
+    }, 1000);
+  }
 }
 
 function openLetter() {
-  if (!envelope || !letter) return;
+  if (openingInvite || !envelope || !letter) return;
+  openingInvite = true;
+  unlockMusic();
   envelope.hidden = true;
-  letter.hidden = false;
   envelope.setAttribute("aria-hidden", "true");
-  window.scrollTo(0, 0);
-  if (music && music.hasInviteTrack && music.hasInviteTrack()) {
-    music.volume = 0.45;
-    music.play().catch(() => {});
-    if (musicBtn) musicBtn.hidden = false;
+  if (autumnScene) {
+    autumnScene.hidden = false;
+    autumnScene.classList.remove("is-done");
+    autumnScene.setAttribute("aria-hidden", "false");
+    spawnLeaves(autumnLeaves);
   }
-  window.setTimeout(startReveals, 80);
+  const leafMs = prefersReducedMotion() ? 400 : 2800;
+  window.setTimeout(revealLetterWithMusic, autumnScene ? leafMs : 0);
 }
 
 if (openBtn && envelope && letter) {
