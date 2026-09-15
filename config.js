@@ -32,9 +32,9 @@ window.INVITE_CONFIG = {
   maxGroupLink: "",
 
   photos: {
-    envelope: "",
-    hero: "",
-    plates: [],
+    envelope: "photos/01-envelope.jpg",
+    hero: "photos/02-hero.jpg",
+    plates: ["photos/03.jpg", "photos/04.jpg"],
     close: "",
   },
 
