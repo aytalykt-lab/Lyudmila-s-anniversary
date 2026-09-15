@@ -54,21 +54,56 @@ function pad(n) {
   return String(n).padStart(2, "0");
 }
 
+function yakutskParts(date) {
+  if (Number.isNaN(date.getTime())) return null;
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Yakutsk",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    weekday: "long",
+    hourCycle: "h23",
+  }).formatToParts(date);
+  const get = (type) => parts.find((part) => part.type === type)?.value || "";
+  const weekdayEn = get("weekday").toLowerCase();
+  const weekdayIndex = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ].indexOf(weekdayEn);
+  return {
+    year: Number(get("year")),
+    month: Number(get("month")) - 1,
+    day: Number(get("day")),
+    hour: Number(get("hour")),
+    minute: Number(get("minute")),
+    weekday: weekdayIndex >= 0 ? WEEKDAYS[weekdayIndex] : "",
+  };
+}
+
 function formatLongDate(date) {
-  if (Number.isNaN(date.getTime())) return "";
-  const weekday = WEEKDAYS[date.getDay()];
-  const labeled = weekday.charAt(0).toUpperCase() + weekday.slice(1);
-  return `${labeled}, ${date.getDate()} ${MONTHS_GEN[date.getMonth()]} ${date.getFullYear()} г.`;
+  const parts = yakutskParts(date);
+  if (!parts) return "";
+  const labeled = parts.weekday.charAt(0).toUpperCase() + parts.weekday.slice(1);
+  return `${labeled}, ${parts.day} ${MONTHS_GEN[parts.month]} ${parts.year} г.`;
 }
 
 function formatShortDate(date) {
-  if (Number.isNaN(date.getTime())) return "";
-  return `${date.getDate()} ${MONTHS_GEN[date.getMonth()]} ${date.getFullYear()} г.`;
+  const parts = yakutskParts(date);
+  if (!parts) return "";
+  return `${parts.day} ${MONTHS_GEN[parts.month]} ${parts.year} г.`;
 }
 
 function formatTime(date) {
-  if (Number.isNaN(date.getTime())) return "";
-  return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  const parts = yakutskParts(date);
+  if (!parts) return "";
+  return `${pad(parts.hour)}:${pad(parts.minute)}`;
 }
 
 function plural(n, one, few, many) {
@@ -129,11 +164,12 @@ function applyCopy() {
 
 function renderCalendar(date) {
   const root = document.getElementById("calendar");
-  if (!root || Number.isNaN(date.getTime())) return;
+  const parts = yakutskParts(date);
+  if (!root || !parts) return;
 
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const marked = date.getDate();
+  const year = parts.year;
+  const month = parts.month;
+  const marked = parts.day;
   const first = new Date(year, month, 1);
   const startWeekday = (first.getDay() + 6) % 7;
   const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -226,24 +262,7 @@ function bindMaps() {
     wrap.hidden = false;
   }
 
-  if (links && (venue.yandex || venue.twogis)) {
-    const parts = [];
-    if (venue.yandex) {
-      parts.push(
-        `<a class="text-link" href="${venue.yandex}" target="_blank" rel="noreferrer">Посмотреть на карте</a>`
-      );
-    }
-    if (venue.yandex && venue.twogis) {
-      parts.push('<span aria-hidden="true"> · </span>');
-    }
-    if (venue.twogis) {
-      parts.push(
-        `<a class="text-link" href="${venue.twogis}" target="_blank" rel="noreferrer">Маршрут в 2ГИС</a>`
-      );
-    }
-    links.innerHTML = parts.join("");
-    links.hidden = false;
-  }
+  if (links) links.hidden = true;
 
   if (note) note.hidden = hasExactPlace;
 }
