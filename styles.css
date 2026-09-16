@@ -218,7 +218,7 @@ h1 {
   border: 1px solid rgba(122, 86, 54, 0.35);
   background:
     radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0.45), transparent 58%),
-    radial-gradient(circle at 50% 50%, #f3e6d4, #d4c0a4 72%);
+    radial-gradient(circle at 50% 50%, #ead9c4, #cbb79a 72%);
   color: var(--ink);
   font-family: var(--display);
   line-height: 1.2;
