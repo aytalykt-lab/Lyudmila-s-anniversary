@@ -1,13 +1,13 @@
 :root {
-  --paper: #ffd4a8;
-  --paper-deep: #ffbf7a;
+  --paper: #f4eadc;
+  --paper-deep: #e6d5bf;
   --ink: #3c1706;
   --muted: #a34b16;
   --gold: #ffb347;
   --rose: #f07828;
   --rose-deep: #e05a12;
   --wine: #c2410c;
-  --line: rgba(194, 65, 12, 0.22);
+  --line: rgba(122, 86, 54, 0.2);
   --display: "Playfair Display", "Times New Roman", serif;
   --script: "Great Vibes", "Segoe Script", cursive;
   --sans: "Nunito", "Segoe UI", sans-serif;
@@ -28,7 +28,7 @@ body {
 
 body {
   color: var(--ink);
-  background: #c2410c;
+  background: #d8c4a8;
   font-family: var(--sans);
   line-height: 1.6;
   font-size: 15px;
@@ -752,7 +752,7 @@ h1 {
   padding: 12px 14px;
   border: 1px solid var(--line);
   border-radius: 10px;
-  background: #fff7ed;
+  background: #fbf6ef;
   color: var(--ink);
 }
 
